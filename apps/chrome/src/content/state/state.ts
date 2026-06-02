@@ -2,6 +2,7 @@ import { StateType } from "./types";
 
 export interface IApp {
   hoveredElement: HTMLElement | null;
+  mousePosition: { x: number; y: number };
   transition(state: StateType): void;
 }
 

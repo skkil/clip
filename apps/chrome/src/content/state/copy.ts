@@ -7,18 +7,22 @@ export default class CopyState extends State {
 
     const hoveredElement = this.app.hoveredElement;
     if (hoveredElement) {
-      hoveredElement.classList.add("sync-hovered-element");
+      hoveredElement.classList.add("clip-hovered-element");
     }
   }
 
   onExit(): void {
     const hoveredElement = this.app.hoveredElement;
     if (hoveredElement) {
-      hoveredElement.classList.remove("sync-hovered-element");
+      hoveredElement.classList.remove("clip-hovered-element");
     }
   }
 
-  handleKeyDown(): void {}
+  handleKeyDown(e: KeyboardEvent): void {
+    if (e.key === "Shift") {
+      this.app.transition(StateType.MENU);
+    }
+  }
 
   handleKeyUp(e: KeyboardEvent): void {
     if (e.key === "Alt") {
@@ -29,14 +33,14 @@ export default class CopyState extends State {
   handleMouseOver(): void {
     const hoveredElement = this.app.hoveredElement;
     if (hoveredElement) {
-      hoveredElement.classList.add("sync-hovered-element");
+      hoveredElement.classList.add("clip-hovered-element");
     }
   }
 
   handleMouseOut(e: MouseEvent): void {
     const hoveredElement = this.app.hoveredElement;
     if (hoveredElement && e.target === hoveredElement) {
-      hoveredElement.classList.remove("sync-hovered-element");
+      hoveredElement.classList.remove("clip-hovered-element");
     }
   }
 

@@ -18,6 +18,10 @@ document.addEventListener("mouseout", (e) => {
   app.handleMouseOut(e);
 });
 
+document.addEventListener("mousemove", (e) => {
+  app.handleMouseMove(e);
+});
+
 document.addEventListener("click", (e) => {
   app.handleClick(e);
 });
