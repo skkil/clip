@@ -9,6 +9,7 @@ export default defineConfig({
       },
       output: {
         entryFileNames: "[name].js",
+        assetFileNames: "assets/[name].[ext]",
       },
     },
   },

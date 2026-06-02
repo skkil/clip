@@ -1,5 +1,7 @@
 import app from "./state";
 
+import "./styles.css";
+
 document.addEventListener("keydown", (e) => {
   app.handleKeyDown(e);
 });

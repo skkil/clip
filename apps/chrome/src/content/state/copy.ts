@@ -4,13 +4,17 @@ import { StateType } from "./types";
 export default class CopyState extends State {
   onEnter(): void {
     document.body.style.cursor = "copy";
+
+    const hoveredElement = this.app.hoveredElement;
+    if (hoveredElement) {
+      hoveredElement.classList.add("sync-hovered-element");
+    }
   }
 
   onExit(): void {
     const hoveredElement = this.app.hoveredElement;
     if (hoveredElement) {
-      hoveredElement.style.outline = "";
-      this.app.hoveredElement = null;
+      hoveredElement.classList.remove("sync-hovered-element");
     }
   }
 
@@ -22,22 +26,17 @@ export default class CopyState extends State {
     }
   }
 
-  handleMouseOver(e: MouseEvent): void {
+  handleMouseOver(): void {
     const hoveredElement = this.app.hoveredElement;
-    const target = e.target as HTMLElement;
-
-    if (hoveredElement && hoveredElement !== target) {
-      hoveredElement.style.outline = "";
+    if (hoveredElement) {
+      hoveredElement.classList.add("sync-hovered-element");
     }
-
-    this.app.hoveredElement = target;
-    target.style.outline = "1px solid red";
   }
 
   handleMouseOut(e: MouseEvent): void {
     const hoveredElement = this.app.hoveredElement;
     if (hoveredElement && e.target === hoveredElement) {
-      hoveredElement.style.outline = "";
+      hoveredElement.classList.remove("sync-hovered-element");
     }
   }
 

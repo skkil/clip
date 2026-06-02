@@ -48,11 +48,17 @@ export class App {
   }
 
   handleMouseOver(e: MouseEvent): void {
+    this.hoveredElement = e.target as HTMLElement;
     this.#states[this.#context.state].handleMouseOver(e);
   }
 
   handleMouseOut(e: MouseEvent): void {
     this.#states[this.#context.state].handleMouseOut(e);
+
+    const target = e.target as HTMLElement;
+    if (this.hoveredElement === target) {
+      this.hoveredElement = null;
+    }
   }
 
   handleClick(e: MouseEvent): void {
