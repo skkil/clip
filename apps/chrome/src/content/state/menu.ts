@@ -6,6 +6,7 @@ import { State } from "./state";
 import { StateType } from "./types";
 
 interface MenuItem {
+  key: string;
   label: string;
   onClick: () => void;
 }
@@ -15,13 +16,15 @@ export default class MenuState extends State {
 
   #items: MenuItem[] = [
     {
-      label: "Text",
+      key: "T",
+      label: "[T]ext",
       onClick: () => {
         copyElementAsTextToClipboard(this.#selected!);
       },
     },
     {
-      label: "HTML",
+      key: "H",
+      label: "[H]TML",
       onClick: () => {
         copyElementAsHtmlToClipboard(this.#selected!);
       },
@@ -49,6 +52,13 @@ export default class MenuState extends State {
     if (e.key === "Escape") {
       e.preventDefault();
       this.app.transition(StateType.COPY_MODE);
+    }
+
+    const item = this.#items.find((i) => i.key === e.key);
+    if (item) {
+      e.preventDefault();
+      item.onClick();
+      this.app.transition(StateType.NORMAL);
     }
   }
 
