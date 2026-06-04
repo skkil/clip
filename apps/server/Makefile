@@ -1,16 +1,14 @@
 BINDIR := $(CURDIR)/bin
 BINNAME := clip
 
-SRC := $(shell find . -type f -name '*.go')
-
 .PHONY: all
 all: build
 
 .PHONY: build
 build: $(BINDIR)/$(BINNAME) tidy
 
-$(BINDIR)/$(BINNAME): $(SRC)
-	go build -o $@ $^
+$(BINDIR)/$(BINNAME):
+	go build -o $@ ./cmd/...
 
 .PHONY: tidy
 tidy:
