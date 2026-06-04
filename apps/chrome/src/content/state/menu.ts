@@ -1,6 +1,7 @@
 import {
   copyElementAsTextToClipboard,
   copyElementAsHtmlToClipboard,
+  copyElementAsImageToClipboard,
 } from "../util/clipboard";
 import { State } from "./state";
 import { StateType } from "./types";
@@ -27,6 +28,13 @@ export default class MenuState extends State {
       label: "[H]TML",
       onClick: () => {
         copyElementAsHtmlToClipboard(this.#selected!);
+      },
+    },
+    {
+      key: "I",
+      label: "[I]mage",
+      onClick: () => {
+        copyElementAsImageToClipboard(this.#selected!);
       },
     },
   ];
