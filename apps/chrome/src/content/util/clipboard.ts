@@ -1,4 +1,7 @@
 import { domToBlob } from "modern-screenshot";
+import TurndownService from "turndown";
+
+const turndown = new TurndownService();
 
 function copyTextToClipboard(text: string): void {
   if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -20,9 +23,7 @@ export function copyElementAsHtmlToClipboard(element: HTMLElement): void {
 }
 
 export function copyElementAsMarkdownToClipboard(element: HTMLElement): void {
-  // Placeholder for Markdown conversion logic
-  const markdownContent = `**${element.tagName.toLowerCase()}**: ${element.innerText}`;
-  copyTextToClipboard(markdownContent);
+  copyTextToClipboard(turndown.turndown(element.outerHTML));
 }
 
 export async function copyElementAsImageToClipboard(

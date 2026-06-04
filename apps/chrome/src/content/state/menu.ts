@@ -2,6 +2,7 @@ import {
   copyElementAsTextToClipboard,
   copyElementAsHtmlToClipboard,
   copyElementAsImageToClipboard,
+  copyElementAsMarkdownToClipboard,
 } from "../util/clipboard";
 import { State } from "./state";
 import { StateType } from "./types";
@@ -33,8 +34,15 @@ export default class MenuState extends State {
     {
       key: "I",
       label: "[I]mage",
+      onClick: async () => {
+        await copyElementAsImageToClipboard(this.#selected!);
+      },
+    },
+    {
+      key: "M",
+      label: "[M]arkdown",
       onClick: () => {
-        copyElementAsImageToClipboard(this.#selected!);
+        copyElementAsMarkdownToClipboard(this.#selected!);
       },
     },
   ];
