@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package skkil.clip.v1;
+
+option go_package = "github.com/skkil/clip/proto/v1";
+
+import "google/protobuf/timestamp.proto";
+
+service ClipService {
+  rpc CreateClip(CreateClipRequest) returns (CreateClipResponse);
+}
+
+message CreateClipRequest {
+  string content = 1;
+}
+
+message CreateClipResponse {
+  string id = 1;
+  google.protobuf.Timestamp created_at = 2;
+}

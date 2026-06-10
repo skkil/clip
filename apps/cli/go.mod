@@ -1,11 +1,15 @@
 module github.com/skkil/clip/cli
 
-go 1.26.3
+go 1.26.4
 
 require (
+	connectrpc.com/connect v1.20.0
 	github.com/charmbracelet/bubbletea v1.3.10
+	github.com/skkil/clip/proto v0.0.0
 	github.com/spf13/cobra v1.10.2
 )
+
+replace github.com/skkil/clip/proto => ../shared/proto/gen/go
 
 require (
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
@@ -26,6 +30,7 @@ require (
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/spf13/pflag v1.0.9 // indirect
 	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
-	golang.org/x/sys v0.36.0 // indirect
-	golang.org/x/text v0.3.8 // indirect
+	golang.org/x/sys v0.42.0 // indirect
+	golang.org/x/text v0.34.0 // indirect
+	google.golang.org/protobuf v1.36.11 // indirect
 )

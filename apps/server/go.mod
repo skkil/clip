@@ -1,11 +1,16 @@
 module github.com/skkil/clip/server
 
-go 1.26.3
+go 1.26.4
 
 require (
+	connectrpc.com/connect v1.20.0
 	github.com/jackc/pgx/v5 v5.10.0
 	github.com/joho/godotenv v1.5.1
+	github.com/skkil/clip/proto v0.0.0
+	google.golang.org/protobuf v1.36.11
 )
+
+replace github.com/skkil/clip/proto => ../shared/proto/gen/go
 
 require (
 	github.com/jackc/pgpassfile v1.0.0 // indirect

@@ -14,7 +14,6 @@ func NewClipService(db *db.Queries) *ClipService {
 	return &ClipService{db: db}
 }
 
-func (s *ClipService) CreateClip(ctx context.Context, content string) error {
-	_, err := s.db.CreateClip(context.Background(), content)
-	return err
+func (s *ClipService) CreateClip(ctx context.Context, content string) (db.Clip, error) {
+	return s.db.CreateClip(ctx, content)
 }

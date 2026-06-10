@@ -28,7 +28,7 @@ func (h *ClipHandler) Copy(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.clipService.CreateClip(r.Context(), string(body))
+	_, err = h.clipService.CreateClip(r.Context(), string(body))
 	if err != nil {
 		log.Printf("failed to create clip: %v\n", err)
 		http.Error(w, "failed to save clip", http.StatusInternalServerError)

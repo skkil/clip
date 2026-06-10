@@ -4,7 +4,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/skkil/clip/cli/internal/clip"
+	"github.com/skkil/clip/cli/internal/services"
 	"github.com/skkil/clip/cli/internal/tui"
 	"github.com/spf13/cobra"
 )
@@ -24,7 +24,7 @@ func run(cmd *cobra.Command, args []string) error {
 			return err
 		}
 
-		svc := clip.NewService()
+		svc := services.NewClipService()
 		return svc.Save(string(data))
 	}
 
@@ -33,6 +33,7 @@ func run(cmd *cobra.Command, args []string) error {
 
 func init() {
 	root.AddCommand(auth)
+	root.AddCommand(copy)
 }
 
 func Execute() error {
