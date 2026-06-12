@@ -13,3 +13,10 @@ type Clip struct {
 	Content   string
 	CreatedAt pgtype.Timestamptz
 }
+
+type User struct {
+	ID        pgtype.UUID
+	Name      string
+	Email     string
+	CreatedAt pgtype.Timestamptz
+}

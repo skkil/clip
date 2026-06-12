@@ -8,6 +8,7 @@ all: build
 build: $(BINDIR)/$(BINNAME) tidy
 
 $(BINDIR)/$(BINNAME):
+	sqlc generate
 	go build -o $@ ./cmd/...
 
 .PHONY: tidy
