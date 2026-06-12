@@ -12,8 +12,11 @@ import (
 
 func RegisterRoutes(mux *http.ServeMux, db *db.Queries) {
 	clipService := services.NewClipService(db)
+	clip := handlers.NewClipHandler(clipService)
+	mux.HandleFunc("POST /v1/copy", clip.Copy)
 
-	mux.HandleFunc("POST /v1/copy", handlers.NewClipHandler(clipService).Copy)
+	auth := handlers.NewAuthHandler()
+	mux.HandleFunc("GET /v1/auth/login", auth.LoginPage)
 
 	path, handler := v1connect.NewClipServiceHandler(rpc.NewClipHandler(clipService))
 	mux.Handle(path, handler)
