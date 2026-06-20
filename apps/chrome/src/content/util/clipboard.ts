@@ -3,7 +3,7 @@ import TurndownService from "turndown";
 
 const turndown = new TurndownService();
 
-function copyTextToClipboard(text: string): void {
+export function copyTextToClipboard(text: string): void {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).catch((err) => {
       console.error("Failed to copy text:", err);

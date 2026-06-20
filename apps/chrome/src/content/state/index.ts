@@ -3,6 +3,7 @@ import { StateType } from "./types";
 import NormalState from "./normal";
 import CopyState from "./copy";
 import MenuState from "./menu";
+import MultiState from "./multi";
 
 interface Context {
   state: StateType;
@@ -35,6 +36,7 @@ export class App implements IApp {
     [StateType.NORMAL]: new NormalState(this),
     [StateType.COPY_MODE]: new CopyState(this),
     [StateType.MENU]: new MenuState(this),
+    [StateType.MULTI]: new MultiState(this),
   };
 
   get hoveredElement(): HTMLElement | null {

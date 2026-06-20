@@ -112,6 +112,9 @@ export default class MenuState extends State {
 
     const center = document.createElement("div");
     center.id = "clip-menu-center";
+    center.onclick = () => {
+      this.app.transition(StateType.MULTI);
+    };
 
     this.#items.forEach((item, index) => {
       const e = document.createElement("div");
