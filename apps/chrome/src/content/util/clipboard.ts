@@ -34,3 +34,20 @@ export async function copyElementAsImageToClipboard(
     await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
   }
 }
+
+export function saveElementAsTextToFile(element: HTMLElement): void {
+  const textContent = element.innerText || element.textContent || "";
+  if (!textContent.trim()) {
+    return;
+  }
+
+  const blob = new Blob([textContent.trim()], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "clip.txt";
+  link.click();
+
+  URL.revokeObjectURL(url);
+}

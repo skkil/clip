@@ -3,6 +3,7 @@ import {
   copyElementAsHtmlToClipboard,
   copyElementAsImageToClipboard,
   copyElementAsMarkdownToClipboard,
+  saveElementAsTextToFile,
 } from "../util/clipboard";
 import { State } from "./state";
 import { StateType } from "./types";
@@ -43,6 +44,13 @@ export default class MenuState extends State {
       label: "[M]arkdown",
       onClick: () => {
         copyElementAsMarkdownToClipboard(this.#selected!);
+      },
+    },
+    {
+      key: "S",
+      label: "[S]ave to file",
+      onClick: () => {
+        saveElementAsTextToFile(this.#selected!);
       },
     },
   ];
