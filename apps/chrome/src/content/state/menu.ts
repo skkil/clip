@@ -1,3 +1,5 @@
+import { Key } from "../../shared/types/key";
+import { getKey } from "../../shared/utils/key";
 import {
   copyElementAsTextToClipboard,
   copyElementAsHtmlToClipboard,
@@ -87,9 +89,11 @@ export default class MenuState extends State {
   }
 
   handleKeyUp(e: KeyboardEvent): void {
-    if (e.key === "Alt") {
+    const key = getKey(e.key);
+
+    if (key === this.app.preferences.keys.leader) {
       this.app.transition(StateType.NORMAL);
-    } else if (e.key === "Shift") {
+    } else if (key === Key.SHIFT) {
       this.app.transition(StateType.COPY_MODE);
     }
   }

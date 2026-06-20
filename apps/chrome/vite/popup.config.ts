@@ -8,6 +8,7 @@ export default defineConfig({
     rolldownOptions: {
       input: {
         popup: "index.html",
+        options: "options.html",
       },
     },
   },

@@ -6,7 +6,8 @@
   "action": {
     "default_popup": "index.html"
   },
-  "permissions": ["clipboardWrite"],
+  "options_page": "options.html",
+  "permissions": ["clipboardWrite", "storage"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

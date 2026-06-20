@@ -1,3 +1,5 @@
+import { Key } from "../../shared/types/key";
+import { getKey } from "../../shared/utils/key";
 import { copyTextToClipboard } from "../util/clipboard";
 import { State } from "./state";
 import { StateType } from "./types";
@@ -21,9 +23,11 @@ export default class MultiState extends State {
   }
 
   handleKeyDown(e: KeyboardEvent): void {
-    if (e.key === "Escape") {
+    const key = getKey(e.key);
+
+    if (key === Key.ESCAPE) {
       this.app.transition(StateType.NORMAL);
-    } else if (e.key === "Enter") {
+    } else if (key === Key.ENTER) {
       const combinedText = this.#elements
         .map((element) => element.innerText || element.textContent || "")
         .filter((text) => text.trim())

@@ -1,8 +1,10 @@
+import type { Preferences } from "../../shared/preferences";
 import { StateType } from "./types";
 
 export interface IApp {
   hoveredElement: HTMLElement | null;
   mousePosition: { x: number; y: number };
+  preferences: Preferences;
   transition(state: StateType): void;
 }
 

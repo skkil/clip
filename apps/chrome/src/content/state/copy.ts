@@ -1,3 +1,4 @@
+import { getKey } from "../../shared/utils/key";
 import { State } from "./state";
 import { StateType } from "./types";
 
@@ -25,7 +26,7 @@ export default class CopyState extends State {
   }
 
   handleKeyUp(e: KeyboardEvent): void {
-    if (e.key === "Alt") {
+    if (this.app.preferences.keys.leader === getKey(e.key)) {
       this.app.transition(StateType.NORMAL);
     }
   }

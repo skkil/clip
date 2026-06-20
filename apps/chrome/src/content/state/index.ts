@@ -4,6 +4,13 @@ import NormalState from "./normal";
 import CopyState from "./copy";
 import MenuState from "./menu";
 import MultiState from "./multi";
+import {
+  DEFAULT_PREFERENCES,
+  getPreferences,
+  registerPreferencesChangeEventListener,
+  type Preferences,
+} from "../../shared/preferences";
+import type { Key } from "../../shared/types/key";
 
 interface Context {
   state: StateType;
@@ -16,6 +23,7 @@ interface Context {
   elements: {
     hovered: HTMLElement | null;
   };
+  preferences: Preferences;
 }
 
 export class App implements IApp {
@@ -30,6 +38,7 @@ export class App implements IApp {
     elements: {
       hovered: null,
     },
+    preferences: DEFAULT_PREFERENCES,
   };
 
   #states: Record<StateType, State> = {
@@ -49,6 +58,25 @@ export class App implements IApp {
 
   get mousePosition(): { x: number; y: number } {
     return this.#context.mouse.position;
+  }
+
+  get preferences(): Preferences {
+    return this.#context.preferences;
+  }
+
+  set leaderKey(key: Key) {
+    this.#context.preferences.keys.leader = key;
+  }
+
+  loadPreferences(): void {
+    getPreferences().then((preferences) => {
+      this.leaderKey = preferences.keys.leader;
+    });
+
+    registerPreferencesChangeEventListener((preferences) => {
+      this.leaderKey = preferences.keys.leader;
+      this.transition(StateType.NORMAL);
+    });
   }
 
   transition(state: StateType): void {
@@ -91,4 +119,7 @@ export class App implements IApp {
   }
 }
 
-export default new App();
+const app = new App();
+app.loadPreferences();
+
+export default app;
