@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"io"
 	"log"
 	"net/http"
@@ -36,4 +37,19 @@ func (h *ClipHandler) Copy(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusNoContent)
+}
+
+func (h *ClipHandler) GetAll(w http.ResponseWriter, r *http.Request) {
+	clips, err := h.clipService.GetAllClips(r.Context())
+	if err != nil {
+		log.Printf("failed to get clips: %v\n", err)
+		http.Error(w, "failed to retrieve clips", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	if err := json.NewEncoder(w).Encode(clips); err != nil {
+		http.Error(w, "failed to encode response", http.StatusInternalServerError)
+		return
+	}
 }

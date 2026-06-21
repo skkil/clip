@@ -17,3 +17,7 @@ func NewClipService(db *db.Queries) *ClipService {
 func (s *ClipService) CreateClip(ctx context.Context, content string) (db.Clip, error) {
 	return s.db.CreateClip(ctx, content)
 }
+
+func (s *ClipService) GetAllClips(ctx context.Context) ([]db.Clip, error) {
+	return s.db.ListClips(ctx, 5)
+}
