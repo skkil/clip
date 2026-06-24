@@ -1,6 +1,6 @@
-import { Key } from "../types/key";
+import { Key } from '@/shared/types/key';
 
-const STORAGE_KEY = "preferences";
+const STORAGE_KEY = 'preferences';
 
 export interface Preferences {
   keys: {
@@ -35,7 +35,7 @@ export function registerPreferencesChangeEventListener(
   callback: (preferences: Preferences) => void,
 ) {
   chrome.storage.onChanged.addListener((changes, areaName) => {
-    if (areaName !== "sync" || !changes[STORAGE_KEY]) {
+    if (areaName !== 'sync' || !changes[STORAGE_KEY]) {
       return;
     }
     callback({

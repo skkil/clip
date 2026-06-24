@@ -4,10 +4,18 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "rm -rf dist && tsc -b && vite build --config ./vite/popup.config.ts && vite build --config ./vite/background.config.ts && vite build --config ./vite/content.config.ts",
+    "clean": "rm -rf dist",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "compile": "tsc -b",
+    "format": "prettier --write .",
+    "compile": "tsc -b",
+    "build:popup": "",
+    "dev": "vite",
+    "preview": "vite preview",
+    "build:popup": "vite build --config ./vite/popup.config.ts ",
+    "build:background": "vite build --config ./vite/background.config.ts",
+    "build:content": "vite build --config ./vite/content.config.ts",
+    "build": "bash scripts/build.sh"
   },
   "dependencies": {
     "modern-screenshot": "^4.7.0",
@@ -19,6 +27,7 @@
     "@babel/core": "^7.29.0",
     "@eslint/js": "^9.39.4",
     "@rolldown/plugin-babel": "^0.2.3",
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/babel__core": "^7.20.5",
     "@types/chrome": "^0.1.40",
     "@types/node": "^24.12.2",
@@ -31,6 +40,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.5.0",
+    "prettier": "^3.8.4",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.58.2",
     "vite": "^8.0.9"

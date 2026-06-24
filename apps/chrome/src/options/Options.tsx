@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+
 import {
   DEFAULT_PREFERENCES,
   getPreferences,
   setPreferences,
-} from "../shared/preferences";
-import { getKey } from "../shared/utils/key";
+} from '@/shared/preferences';
+import { getKey } from '@/shared/utils/key';
 
 export default function Options() {
   const [leaderKey, setLeaderKey] = useState(DEFAULT_PREFERENCES.keys.leader);
@@ -41,8 +42,8 @@ export default function Options() {
       setSaved(false);
     };
 
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, [capturing]);
 
   return (
@@ -52,7 +53,7 @@ export default function Options() {
       <label>
         Leader key
         <button onClick={() => setCapturing(true)}>
-          {capturing ? "Press any key…" : leaderKey}
+          {capturing ? 'Press any key…' : leaderKey}
         </button>
       </label>
 

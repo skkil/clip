@@ -1,16 +1,18 @@
-import { type IApp, type State } from "./state";
-import { StateType } from "./types";
-import NormalState from "./normal";
-import CopyState from "./copy";
-import MenuState from "./menu";
-import MultiState from "./multi";
 import {
   DEFAULT_PREFERENCES,
+  type Preferences,
   getPreferences,
   registerPreferencesChangeEventListener,
-  type Preferences,
-} from "../../shared/preferences";
-import type { Key } from "../../shared/types/key";
+} from '@/shared/preferences';
+import type { Key } from '@/shared/types/key';
+
+import CopyState from './copy';
+import MenuState from './menu';
+import MultiState from './multi';
+import NormalState from './normal';
+import ScreenshotState from './screenshot';
+import { type IApp, type State } from './state';
+import { StateType } from './types';
 
 interface Context {
   state: StateType;
@@ -46,6 +48,7 @@ export class App implements IApp {
     [StateType.COPY_MODE]: new CopyState(this),
     [StateType.MENU]: new MenuState(this),
     [StateType.MULTI]: new MultiState(this),
+    [StateType.SCREENSHOT]: new ScreenshotState(this),
   };
 
   get hoveredElement(): HTMLElement | null {
@@ -109,9 +112,18 @@ export class App implements IApp {
     }
   }
 
+  handleMouseDown(e: MouseEvent): void {
+    this.#states[this.#context.state].handleMouseDown(e);
+  }
+
   handleMouseMove(e: MouseEvent): void {
     this.#context.mouse.position.x = e.clientX;
     this.#context.mouse.position.y = e.clientY;
+    this.#states[this.#context.state].handleMouseMove(e);
+  }
+
+  handleMouseUp(e: MouseEvent): void {
+    this.#states[this.#context.state].handleMouseUp(e);
   }
 
   handleClick(e: MouseEvent): void {

@@ -1,8 +1,9 @@
-import { Key } from "../../shared/types/key";
-import { getKey } from "../../shared/utils/key";
-import { copyTextToClipboard } from "../util/clipboard";
-import { State } from "./state";
-import { StateType } from "./types";
+import { copyTextToClipboard } from '@/content/util/clipboard';
+import { Key } from '@/shared/types/key';
+import { getKey } from '@/shared/utils/key';
+
+import { State } from './state';
+import { StateType } from './types';
 
 export default class MultiState extends State {
   #elements: HTMLElement[] = [];
@@ -10,14 +11,14 @@ export default class MultiState extends State {
   onEnter(): void {
     const hoveredElement = this.app.hoveredElement;
     if (hoveredElement) {
-      hoveredElement.classList.add("clip-hovered-element");
+      hoveredElement.classList.add('clip-hovered-element');
       this.#elements.push(hoveredElement);
     }
   }
 
   onExit(): void {
     for (const element of this.#elements) {
-      element.classList.remove("clip-hovered-element");
+      element.classList.remove('clip-hovered-element');
     }
     this.#elements = [];
   }
@@ -29,9 +30,9 @@ export default class MultiState extends State {
       this.app.transition(StateType.NORMAL);
     } else if (key === Key.ENTER) {
       const combinedText = this.#elements
-        .map((element) => element.innerText || element.textContent || "")
+        .map((element) => element.innerText || element.textContent || '')
         .filter((text) => text.trim())
-        .join("\n\n");
+        .join('\n\n');
 
       copyTextToClipboard(combinedText.trim());
 
@@ -39,19 +40,17 @@ export default class MultiState extends State {
     }
   }
 
-  handleKeyUp(): void {}
-
   handleMouseOver(): void {
     const hoveredElement = this.app.hoveredElement;
     if (hoveredElement) {
-      hoveredElement.classList.add("clip-hovered-element");
+      hoveredElement.classList.add('clip-hovered-element');
     }
   }
 
   handleMouseOut(): void {
     const hoveredElement = this.app.hoveredElement;
     if (hoveredElement && !this.#elements.includes(hoveredElement)) {
-      hoveredElement.classList.remove("clip-hovered-element");
+      hoveredElement.classList.remove('clip-hovered-element');
     }
   }
 
@@ -61,11 +60,11 @@ export default class MultiState extends State {
 
     const element = e.target as HTMLElement;
     if (this.#elements.includes(element)) {
-      element.classList.remove("clip-hovered-element");
+      element.classList.remove('clip-hovered-element');
       const index = this.#elements.indexOf(element);
       this.#elements.splice(index, 1);
     } else {
-      element.classList.add("clip-hovered-element");
+      element.classList.add('clip-hovered-element');
       this.#elements.push(element);
     }
   }

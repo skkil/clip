@@ -1,14 +1,20 @@
-import { defineConfig } from "vite";
-import react, { reactCompilerPreset } from "@vitejs/plugin-react";
-import babel from "@rolldown/plugin-babel";
+import babel from '@rolldown/plugin-babel';
+import react, { reactCompilerPreset } from '@vitejs/plugin-react';
+import { URL, fileURLToPath } from 'node:url';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('../src', import.meta.url)),
+    },
+  },
   build: {
     emptyOutDir: false,
     rolldownOptions: {
       input: {
-        popup: "index.html",
-        options: "options.html",
+        popup: 'index.html',
+        options: 'options.html',
       },
     },
   },

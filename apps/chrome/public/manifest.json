@@ -7,8 +7,8 @@
     "default_popup": "index.html"
   },
   "options_page": "options.html",
-  "permissions": ["clipboardWrite", "storage", "identity"],
-  "host_permissions": ["http://localhost:8080/*"],
+  "permissions": ["clipboardWrite", "storage", "identity", "tabs"],
+  "host_permissions": ["http://localhost:8080/*", "<all_urls>"],
   "background": {
     "service_worker": "background.js"
   },

@@ -1,0 +1,19 @@
+.overlay {
+  inset: 0;
+  z-index: 1000000;
+  cursor: crosshair;
+}
+
+.shade {
+  position: fixed;
+  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+.selectionBox {
+  position: fixed;
+  border: 1.5px solid #ffffff;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}

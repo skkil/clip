@@ -1,0 +1,7 @@
+.clip-hovered-element {
+  outline: 1px solid red;
+}
+
+.clip-selected-element {
+  outline: 1px solid red;
+}

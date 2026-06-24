@@ -1,16 +1,16 @@
-import { Key } from "../types/key";
+import { Key } from '@/shared/types/key';
 
 export function getKey(key: string): Key | undefined {
   switch (key) {
-    case "Alt":
+    case 'Alt':
       return Key.ALT;
-    case "Control":
+    case 'Control':
       return Key.CONTROL;
-    case "Shift":
+    case 'Shift':
       return Key.SHIFT;
-    case "Escape":
+    case 'Escape':
       return Key.ESCAPE;
-    case "Enter":
+    case 'Enter':
       return Key.ENTER;
   }
 }

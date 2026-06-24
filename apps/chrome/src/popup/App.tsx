@@ -1,4 +1,4 @@
-import { SERVER_URL } from "../shared/server";
+import { SERVER_URL } from '@/shared/server';
 
 export default function App() {
   const handleClickSettingsButton = () => {
