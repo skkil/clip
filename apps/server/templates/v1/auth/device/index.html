@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Authorize device - Clip</title>
+    <link href="/css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="card">
+      <p>Enter the code shown on your device to authorize it:</p>
+      <input
+        id="user-code"
+        type="text"
+        value="{{.UserCode}}"
+        autocapitalize="characters"
+        autocomplete="off"
+      />
+      <button id="approve-btn" type="button">Authorize device</button>
+      <p id="status"></p>
+    </div>
+    <script>
+      document
+        .getElementById("approve-btn")
+        .addEventListener("click", async () => {
+          const status = document.getElementById("status");
+          const userCode = document.getElementById("user-code").value.trim();
+          const res = await fetch("/v1/auth/device/approve", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_code: userCode }),
+          });
+          status.textContent = res.ok
+            ? "Device authorized. You may close this tab."
+            : "Failed to authorize device.";
+        });
+    </script>
+  </body>
+</html>

@@ -5,8 +5,106 @@
 package db
 
 import (
+	"database/sql/driver"
+	"fmt"
+
 	"github.com/jackc/pgx/v5/pgtype"
 )
+
+type DeviceStatus string
+
+const (
+	DeviceStatusPending  DeviceStatus = "pending"
+	DeviceStatusApproved DeviceStatus = "approved"
+	DeviceStatusDenied   DeviceStatus = "denied"
+	DeviceStatusExpired  DeviceStatus = "expired"
+)
+
+func (e *DeviceStatus) Scan(src interface{}) error {
+	switch s := src.(type) {
+	case []byte:
+		*e = DeviceStatus(s)
+	case string:
+		*e = DeviceStatus(s)
+	default:
+		return fmt.Errorf("unsupported scan type for DeviceStatus: %T", src)
+	}
+	return nil
+}
+
+type NullDeviceStatus struct {
+	DeviceStatus DeviceStatus
+	Valid        bool // Valid is true if DeviceStatus is not NULL
+}
+
+// Scan implements the Scanner interface.
+func (ns *NullDeviceStatus) Scan(value interface{}) error {
+	if value == nil {
+		ns.DeviceStatus, ns.Valid = "", false
+		return nil
+	}
+	ns.Valid = true
+	return ns.DeviceStatus.Scan(value)
+}
+
+// Value implements the driver Valuer interface.
+func (ns NullDeviceStatus) Value() (driver.Value, error) {
+	if !ns.Valid {
+		return nil, nil
+	}
+	return string(ns.DeviceStatus), nil
+}
+
+type OauthProvider string
+
+const (
+	OauthProviderGoogle OauthProvider = "google"
+)
+
+func (e *OauthProvider) Scan(src interface{}) error {
+	switch s := src.(type) {
+	case []byte:
+		*e = OauthProvider(s)
+	case string:
+		*e = OauthProvider(s)
+	default:
+		return fmt.Errorf("unsupported scan type for OauthProvider: %T", src)
+	}
+	return nil
+}
+
+type NullOauthProvider struct {
+	OauthProvider OauthProvider
+	Valid         bool // Valid is true if OauthProvider is not NULL
+}
+
+// Scan implements the Scanner interface.
+func (ns *NullOauthProvider) Scan(value interface{}) error {
+	if value == nil {
+		ns.OauthProvider, ns.Valid = "", false
+		return nil
+	}
+	ns.Valid = true
+	return ns.OauthProvider.Scan(value)
+}
+
+// Value implements the driver Valuer interface.
+func (ns NullOauthProvider) Value() (driver.Value, error) {
+	if !ns.Valid {
+		return nil, nil
+	}
+	return string(ns.OauthProvider), nil
+}
+
+type AccessToken struct {
+	ID             pgtype.UUID
+	RefreshTokenID pgtype.UUID
+	UserID         pgtype.UUID
+	DeviceID       pgtype.UUID
+	TokenHash      string
+	CreatedAt      pgtype.Timestamptz
+	ExpiresAt      pgtype.Timestamptz
+}
 
 type Clip struct {
 	ID        pgtype.UUID
@@ -14,9 +112,40 @@ type Clip struct {
 	CreatedAt pgtype.Timestamptz
 }
 
+type Device struct {
+	ID             pgtype.UUID
+	UserID         pgtype.UUID
+	DeviceCodeHash string
+	UserCode       string
+	Status         DeviceStatus
+	Name           pgtype.Text
+	ExpiresAt      pgtype.Timestamptz
+	ApprovedAt     pgtype.Timestamptz
+	CreatedAt      pgtype.Timestamptz
+}
+
+type OauthIdentity struct {
+	ID             pgtype.UUID
+	UserID         pgtype.UUID
+	Provider       OauthProvider
+	ProviderUserID string
+	CreatedAt      pgtype.Timestamptz
+}
+
+type RefreshToken struct {
+	ID         pgtype.UUID
+	DeviceID   pgtype.UUID
+	UserID     pgtype.UUID
+	TokenHash  string
+	CreatedAt  pgtype.Timestamptz
+	LastUsedAt pgtype.Timestamptz
+	ExpiresAt  pgtype.Timestamptz
+	RevokedAt  pgtype.Timestamptz
+}
+
 type User struct {
 	ID        pgtype.UUID
-	Name      string
+	Name      pgtype.Text
 	Email     string
 	CreatedAt pgtype.Timestamptz
 }

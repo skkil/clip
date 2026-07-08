@@ -18,3 +18,7 @@ tidy:
 .PHONY: clean
 clean:
 	@rm -rf $(BINDIR)
+
+.PHONY: migrate
+migrate:
+	@set -a; . ./.env; set +a; atlas schema apply --env local
