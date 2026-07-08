@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/skkil/clip/server/internal/middleware"
 	"github.com/skkil/clip/server/internal/services"
 )
 
@@ -18,6 +19,12 @@ func NewClipHandler(clipService *services.ClipService) *ClipHandler {
 }
 
 func (h *ClipHandler) Copy(w http.ResponseWriter, r *http.Request) {
+	userID, ok := middleware.UserIDFromContext(r.Context())
+	if !ok {
+		http.Error(w, "unauthorized", http.StatusUnauthorized)
+		return
+	}
+
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, "failed to read body", http.StatusBadRequest)
@@ -29,7 +36,7 @@ func (h *ClipHandler) Copy(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, err = h.clipService.CreateClip(r.Context(), string(body))
+	_, err = h.clipService.CreateClip(r.Context(), userID, string(body))
 	if err != nil {
 		log.Printf("failed to create clip: %v\n", err)
 		http.Error(w, "failed to save clip", http.StatusInternalServerError)
@@ -40,7 +47,13 @@ func (h *ClipHandler) Copy(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *ClipHandler) GetAll(w http.ResponseWriter, r *http.Request) {
-	clips, err := h.clipService.GetAllClips(r.Context())
+	userID, ok := middleware.UserIDFromContext(r.Context())
+	if !ok {
+		http.Error(w, "unauthorized", http.StatusUnauthorized)
+		return
+	}
+
+	clips, err := h.clipService.GetAllClips(r.Context(), userID)
 	if err != nil {
 		log.Printf("failed to get clips: %v\n", err)
 		http.Error(w, "failed to retrieve clips", http.StatusInternalServerError)

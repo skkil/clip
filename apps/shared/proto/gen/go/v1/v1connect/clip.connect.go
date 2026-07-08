@@ -35,11 +35,14 @@ const (
 const (
 	// ClipServiceCreateClipProcedure is the fully-qualified name of the ClipService's CreateClip RPC.
 	ClipServiceCreateClipProcedure = "/skkil.clip.v1.ClipService/CreateClip"
+	// ClipServiceListClipsProcedure is the fully-qualified name of the ClipService's ListClips RPC.
+	ClipServiceListClipsProcedure = "/skkil.clip.v1.ClipService/ListClips"
 )
 
 // ClipServiceClient is a client for the skkil.clip.v1.ClipService service.
 type ClipServiceClient interface {
 	CreateClip(context.Context, *connect.Request[v1.CreateClipRequest]) (*connect.Response[v1.CreateClipResponse], error)
+	ListClips(context.Context, *connect.Request[v1.ListClipsRequest]) (*connect.Response[v1.ListClipsResponse], error)
 }
 
 // NewClipServiceClient constructs a client for the skkil.clip.v1.ClipService service. By default,
@@ -59,12 +62,19 @@ func NewClipServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithSchema(clipServiceMethods.ByName("CreateClip")),
 			connect.WithClientOptions(opts...),
 		),
+		listClips: connect.NewClient[v1.ListClipsRequest, v1.ListClipsResponse](
+			httpClient,
+			baseURL+ClipServiceListClipsProcedure,
+			connect.WithSchema(clipServiceMethods.ByName("ListClips")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // clipServiceClient implements ClipServiceClient.
 type clipServiceClient struct {
 	createClip *connect.Client[v1.CreateClipRequest, v1.CreateClipResponse]
+	listClips  *connect.Client[v1.ListClipsRequest, v1.ListClipsResponse]
 }
 
 // CreateClip calls skkil.clip.v1.ClipService.CreateClip.
@@ -72,9 +82,15 @@ func (c *clipServiceClient) CreateClip(ctx context.Context, req *connect.Request
 	return c.createClip.CallUnary(ctx, req)
 }
 
+// ListClips calls skkil.clip.v1.ClipService.ListClips.
+func (c *clipServiceClient) ListClips(ctx context.Context, req *connect.Request[v1.ListClipsRequest]) (*connect.Response[v1.ListClipsResponse], error) {
+	return c.listClips.CallUnary(ctx, req)
+}
+
 // ClipServiceHandler is an implementation of the skkil.clip.v1.ClipService service.
 type ClipServiceHandler interface {
 	CreateClip(context.Context, *connect.Request[v1.CreateClipRequest]) (*connect.Response[v1.CreateClipResponse], error)
+	ListClips(context.Context, *connect.Request[v1.ListClipsRequest]) (*connect.Response[v1.ListClipsResponse], error)
 }
 
 // NewClipServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -90,10 +106,18 @@ func NewClipServiceHandler(svc ClipServiceHandler, opts ...connect.HandlerOption
 		connect.WithSchema(clipServiceMethods.ByName("CreateClip")),
 		connect.WithHandlerOptions(opts...),
 	)
+	clipServiceListClipsHandler := connect.NewUnaryHandler(
+		ClipServiceListClipsProcedure,
+		svc.ListClips,
+		connect.WithSchema(clipServiceMethods.ByName("ListClips")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/skkil.clip.v1.ClipService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ClipServiceCreateClipProcedure:
 			clipServiceCreateClipHandler.ServeHTTP(w, r)
+		case ClipServiceListClipsProcedure:
+			clipServiceListClipsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -105,4 +129,8 @@ type UnimplementedClipServiceHandler struct{}
 
 func (UnimplementedClipServiceHandler) CreateClip(context.Context, *connect.Request[v1.CreateClipRequest]) (*connect.Response[v1.CreateClipResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("skkil.clip.v1.ClipService.CreateClip is not implemented"))
+}
+
+func (UnimplementedClipServiceHandler) ListClips(context.Context, *connect.Request[v1.ListClipsRequest]) (*connect.Response[v1.ListClipsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("skkil.clip.v1.ClipService.ListClips is not implemented"))
 }

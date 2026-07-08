@@ -118,6 +118,146 @@ func (x *CreateClipResponse) GetCreatedAt() *timestamppb.Timestamp {
 	return nil
 }
 
+type ListClipsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListClipsRequest) Reset() {
+	*x = ListClipsRequest{}
+	mi := &file_v1_clip_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListClipsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListClipsRequest) ProtoMessage() {}
+
+func (x *ListClipsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_clip_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListClipsRequest.ProtoReflect.Descriptor instead.
+func (*ListClipsRequest) Descriptor() ([]byte, []int) {
+	return file_v1_clip_proto_rawDescGZIP(), []int{2}
+}
+
+type Clip struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Clip) Reset() {
+	*x = Clip{}
+	mi := &file_v1_clip_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Clip) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Clip) ProtoMessage() {}
+
+func (x *Clip) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_clip_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Clip.ProtoReflect.Descriptor instead.
+func (*Clip) Descriptor() ([]byte, []int) {
+	return file_v1_clip_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *Clip) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Clip) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
+}
+
+func (x *Clip) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+type ListClipsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Clips         []*Clip                `protobuf:"bytes,1,rep,name=clips,proto3" json:"clips,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListClipsResponse) Reset() {
+	*x = ListClipsResponse{}
+	mi := &file_v1_clip_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListClipsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListClipsResponse) ProtoMessage() {}
+
+func (x *ListClipsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_clip_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListClipsResponse.ProtoReflect.Descriptor instead.
+func (*ListClipsResponse) Descriptor() ([]byte, []int) {
+	return file_v1_clip_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ListClipsResponse) GetClips() []*Clip {
+	if x != nil {
+		return x.Clips
+	}
+	return nil
+}
+
 var File_v1_clip_proto protoreflect.FileDescriptor
 
 const file_v1_clip_proto_rawDesc = "" +
@@ -128,10 +268,19 @@ const file_v1_clip_proto_rawDesc = "" +
 	"\x12CreateClipResponse\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x129\n" +
 	"\n" +
-	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt2`\n" +
+	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"\x12\n" +
+	"\x10ListClipsRequest\"k\n" +
+	"\x04Clip\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x18\n" +
+	"\acontent\x18\x02 \x01(\tR\acontent\x129\n" +
+	"\n" +
+	"created_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\">\n" +
+	"\x11ListClipsResponse\x12)\n" +
+	"\x05clips\x18\x01 \x03(\v2\x13.skkil.clip.v1.ClipR\x05clips2\xb0\x01\n" +
 	"\vClipService\x12Q\n" +
 	"\n" +
-	"CreateClip\x12 .skkil.clip.v1.CreateClipRequest\x1a!.skkil.clip.v1.CreateClipResponseB\x94\x01\n" +
+	"CreateClip\x12 .skkil.clip.v1.CreateClipRequest\x1a!.skkil.clip.v1.CreateClipResponse\x12N\n" +
+	"\tListClips\x12\x1f.skkil.clip.v1.ListClipsRequest\x1a .skkil.clip.v1.ListClipsResponseB\x94\x01\n" +
 	"\x11com.skkil.clip.v1B\tClipProtoP\x01Z\x1egithub.com/skkil/clip/proto/v1\xa2\x02\x03SCX\xaa\x02\rSkkil.Clip.V1\xca\x02\rSkkil\\Clip\\V1\xe2\x02\x19Skkil\\Clip\\V1\\GPBMetadata\xea\x02\x0fSkkil::Clip::V1b\x06proto3"
 
 var (
@@ -146,21 +295,28 @@ func file_v1_clip_proto_rawDescGZIP() []byte {
 	return file_v1_clip_proto_rawDescData
 }
 
-var file_v1_clip_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_v1_clip_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_v1_clip_proto_goTypes = []any{
 	(*CreateClipRequest)(nil),     // 0: skkil.clip.v1.CreateClipRequest
 	(*CreateClipResponse)(nil),    // 1: skkil.clip.v1.CreateClipResponse
-	(*timestamppb.Timestamp)(nil), // 2: google.protobuf.Timestamp
+	(*ListClipsRequest)(nil),      // 2: skkil.clip.v1.ListClipsRequest
+	(*Clip)(nil),                  // 3: skkil.clip.v1.Clip
+	(*ListClipsResponse)(nil),     // 4: skkil.clip.v1.ListClipsResponse
+	(*timestamppb.Timestamp)(nil), // 5: google.protobuf.Timestamp
 }
 var file_v1_clip_proto_depIdxs = []int32{
-	2, // 0: skkil.clip.v1.CreateClipResponse.created_at:type_name -> google.protobuf.Timestamp
-	0, // 1: skkil.clip.v1.ClipService.CreateClip:input_type -> skkil.clip.v1.CreateClipRequest
-	1, // 2: skkil.clip.v1.ClipService.CreateClip:output_type -> skkil.clip.v1.CreateClipResponse
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	5, // 0: skkil.clip.v1.CreateClipResponse.created_at:type_name -> google.protobuf.Timestamp
+	5, // 1: skkil.clip.v1.Clip.created_at:type_name -> google.protobuf.Timestamp
+	3, // 2: skkil.clip.v1.ListClipsResponse.clips:type_name -> skkil.clip.v1.Clip
+	0, // 3: skkil.clip.v1.ClipService.CreateClip:input_type -> skkil.clip.v1.CreateClipRequest
+	2, // 4: skkil.clip.v1.ClipService.ListClips:input_type -> skkil.clip.v1.ListClipsRequest
+	1, // 5: skkil.clip.v1.ClipService.CreateClip:output_type -> skkil.clip.v1.CreateClipResponse
+	4, // 6: skkil.clip.v1.ClipService.ListClips:output_type -> skkil.clip.v1.ListClipsResponse
+	5, // [5:7] is the sub-list for method output_type
+	3, // [3:5] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_v1_clip_proto_init() }
@@ -174,7 +330,7 @@ func file_v1_clip_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_clip_proto_rawDesc), len(file_v1_clip_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

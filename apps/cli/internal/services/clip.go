@@ -18,15 +18,17 @@ func NewClipService() *ClipService {
 	return &ClipService{}
 }
 
-func (s *ClipService) Save(text string) error {
+func (s *ClipService) client() v1connect.ClipServiceClient {
 	auth := NewAuthService(config.ServerURL())
-	client := v1connect.NewClipServiceClient(
+	return v1connect.NewClipServiceClient(
 		http.DefaultClient,
 		config.ServerURL(),
 		connect.WithInterceptors(newAuthInterceptor(auth)),
 	)
+}
 
-	clip, err := client.CreateClip(context.Background(), connect.NewRequest(&v1.CreateClipRequest{
+func (s *ClipService) Save(text string) error {
+	clip, err := s.client().CreateClip(context.Background(), connect.NewRequest(&v1.CreateClipRequest{
 		Content: text,
 	}))
 	if err != nil {
@@ -35,4 +37,13 @@ func (s *ClipService) Save(text string) error {
 
 	fmt.Printf("Clip created with ID: %s\n", clip.Msg.Id)
 	return nil
+}
+
+func (s *ClipService) List(ctx context.Context) ([]*v1.Clip, error) {
+	resp, err := s.client().ListClips(ctx, connect.NewRequest(&v1.ListClipsRequest{}))
+	if err != nil {
+		return nil, fmt.Errorf("failed to list clips: %w", err)
+	}
+
+	return resp.Msg.Clips, nil
 }

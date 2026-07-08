@@ -7,41 +7,62 @@ package db
 
 import (
 	"context"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const createClip = `-- name: CreateClip :one
 INSERT INTO
-    clips (content)
+    clips (user_id, content)
 VALUES
-    ($1)
+    ($1, $2)
 RETURNING
     id,
+    user_id,
     content,
     created_at
 `
 
-func (q *Queries) CreateClip(ctx context.Context, content string) (Clip, error) {
-	row := q.db.QueryRow(ctx, createClip, content)
+type CreateClipParams struct {
+	UserID  pgtype.UUID
+	Content string
+}
+
+func (q *Queries) CreateClip(ctx context.Context, arg CreateClipParams) (Clip, error) {
+	row := q.db.QueryRow(ctx, createClip, arg.UserID, arg.Content)
 	var i Clip
-	err := row.Scan(&i.ID, &i.Content, &i.CreatedAt)
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.Content,
+		&i.CreatedAt,
+	)
 	return i, err
 }
 
 const listClips = `-- name: ListClips :many
 SELECT
     id,
+    user_id,
     content,
     created_at
 FROM
     clips
+WHERE
+    user_id = $1
 ORDER BY
     created_at DESC
 LIMIT
-    $1
+    $2
 `
 
-func (q *Queries) ListClips(ctx context.Context, limit int32) ([]Clip, error) {
-	rows, err := q.db.Query(ctx, listClips, limit)
+type ListClipsParams struct {
+	UserID pgtype.UUID
+	Limit  int32
+}
+
+func (q *Queries) ListClips(ctx context.Context, arg ListClipsParams) ([]Clip, error) {
+	rows, err := q.db.Query(ctx, listClips, arg.UserID, arg.Limit)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +70,12 @@ func (q *Queries) ListClips(ctx context.Context, limit int32) ([]Clip, error) {
 	var items []Clip
 	for rows.Next() {
 		var i Clip
-		if err := rows.Scan(&i.ID, &i.Content, &i.CreatedAt); err != nil {
+		if err := rows.Scan(
+			&i.ID,
+			&i.UserID,
+			&i.Content,
+			&i.CreatedAt,
+		); err != nil {
 			return nil, err
 		}
 		items = append(items, i)

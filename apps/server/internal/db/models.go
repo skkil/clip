@@ -108,6 +108,7 @@ type AccessToken struct {
 
 type Clip struct {
 	ID        pgtype.UUID
+	UserID    pgtype.UUID
 	Content   string
 	CreatedAt pgtype.Timestamptz
 }
