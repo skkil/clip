@@ -8,11 +8,9 @@
     "lint": "eslint .",
     "compile": "tsc -b",
     "format": "prettier --write .",
-    "compile": "tsc -b",
-    "build:popup": "",
     "dev": "vite",
     "preview": "vite preview",
-    "build:popup": "vite build --config ./vite/popup.config.ts ",
+    "build:popup": "vite build --config ./vite/popup.config.ts",
     "build:background": "vite build --config ./vite/background.config.ts",
     "build:content": "vite build --config ./vite/content.config.ts",
     "build": "bash scripts/build.sh"
