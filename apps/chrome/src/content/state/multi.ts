@@ -34,7 +34,11 @@ export default class MultiState extends State {
         .filter((text) => text.trim())
         .join('\n\n');
 
-      copyTextToClipboard(combinedText.trim());
+      const count = this.#elements.length;
+      void copyTextToClipboard(
+        combinedText.trim(),
+        `Copied ${count} element${count === 1 ? '' : 's'}`,
+      );
 
       this.app.transition(StateType.NORMAL);
     }

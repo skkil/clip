@@ -6,11 +6,23 @@ export interface Preferences {
   keys: {
     leader: Key;
   };
+  toasts: {
+    enabled: boolean;
+  };
+  highlight: {
+    color: string;
+  };
 }
 
 export const DEFAULT_PREFERENCES: Preferences = {
   keys: {
     leader: Key.ALT,
+  },
+  toasts: {
+    enabled: true,
+  },
+  highlight: {
+    color: '#ff0000',
   },
 };
 

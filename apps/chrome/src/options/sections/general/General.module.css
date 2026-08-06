@@ -17,6 +17,33 @@
   color: var(--muted);
 }
 
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.preview {
+  padding: 7px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--control);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.preview:hover {
+  background: var(--control-hover);
+}
+
+.highlightPreview {
+  padding: 4px 10px;
+  outline: 1px solid;
+  font-size: 13px;
+  color: var(--muted);
+}
+
 .status {
   min-height: 18px;
   font-size: 12.5px;

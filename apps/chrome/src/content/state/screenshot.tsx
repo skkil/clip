@@ -6,6 +6,7 @@ import Screenshot, {
 import css from '@/content/components/screenshot/Screenshot.module.css?inline';
 import { setCursor } from '@/content/util/dom/cursor';
 import { type Mount, mount } from '@/content/util/dom/mount';
+import { showToast } from '@/content/util/toast';
 import { MessageType } from '@/shared/messages';
 
 import { State } from './state';
@@ -109,6 +110,7 @@ export default class ScreenshotState extends State {
 
       const dataUrl = await this.#captureVisibleTab();
       if (!dataUrl) {
+        showToast('error', 'Could not capture this page');
         return;
       }
 
@@ -121,6 +123,7 @@ export default class ScreenshotState extends State {
 
       const context = canvas.getContext('2d');
       if (!context) {
+        showToast('error', 'Could not capture selection');
         return;
       }
 
@@ -140,13 +143,23 @@ export default class ScreenshotState extends State {
         canvas.toBlob(resolve, 'image/png');
       });
 
-      if (croppedBlob) {
-        await navigator.clipboard.write([
-          new ClipboardItem({ 'image/png': croppedBlob }),
-        ]);
+      if (!croppedBlob) {
+        showToast('error', 'Could not capture selection');
+        return;
       }
+
+      if (!navigator.clipboard?.write) {
+        showToast('error', 'Image copy needs a secure (https) page');
+        return;
+      }
+
+      await navigator.clipboard.write([
+        new ClipboardItem({ 'image/png': croppedBlob }),
+      ]);
+      showToast('success', 'Screenshot copied');
     } catch (err) {
       console.error('Failed to capture screenshot:', err);
+      showToast('error', 'Could not copy screenshot');
     } finally {
       this.app.transition(StateType.NORMAL);
     }

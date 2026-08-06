@@ -1,6 +1,9 @@
 import '@/shared/styles/global.css';
 
 import app from './state';
+import { loadHighlightColor } from './util/highlight';
+
+loadHighlightColor();
 
 document.addEventListener('keydown', (e) => {
   app.handleKeyDown(e);

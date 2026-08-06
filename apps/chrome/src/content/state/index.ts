@@ -41,7 +41,7 @@ export class App implements IApp {
     elements: {
       hovered: null,
     },
-    preferences: DEFAULT_PREFERENCES,
+    preferences: structuredClone(DEFAULT_PREFERENCES),
   };
 
   #states: Record<StateType, State> = {

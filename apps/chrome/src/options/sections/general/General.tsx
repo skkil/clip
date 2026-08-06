@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 
+import { previewToast } from '@/content/util/toast';
+import { ColorPicker } from '@/options/components/color-picker/ColorPicker';
 import { KeyCapture } from '@/options/components/key-capture/KeyCapture';
 import { Setting, SettingGroup } from '@/options/components/setting/Setting';
+import { Switch } from '@/options/components/switch/Switch';
 import {
   DEFAULT_PREFERENCES,
   getPreferences,
@@ -13,11 +16,19 @@ import styles from './General.module.css';
 
 export function General() {
   const [leaderKey, setLeaderKey] = useState(DEFAULT_PREFERENCES.keys.leader);
+  const [toastsEnabled, setToastsEnabled] = useState(
+    DEFAULT_PREFERENCES.toasts.enabled,
+  );
+  const [highlightColor, setHighlightColor] = useState(
+    DEFAULT_PREFERENCES.highlight.color,
+  );
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     getPreferences().then((preferences) => {
       setLeaderKey(preferences.keys.leader);
+      setToastsEnabled(preferences.toasts.enabled);
+      setHighlightColor(preferences.highlight.color);
     });
   }, []);
 
@@ -25,6 +36,22 @@ export function General() {
     setLeaderKey(key);
     await setPreferences({ keys: { leader: key } });
     setSaved(true);
+  };
+
+  const handleChangeToasts = async (enabled: boolean) => {
+    setToastsEnabled(enabled);
+    await setPreferences({ toasts: { enabled } });
+    setSaved(true);
+  };
+
+  const handleChangeHighlightColor = async (color: string) => {
+    setHighlightColor(color);
+    await setPreferences({ highlight: { color } });
+    setSaved(true);
+  };
+
+  const handleClickPreview = () => {
+    previewToast('success', 'Copied');
   };
 
   return (
@@ -42,6 +69,41 @@ export function General() {
           description="Hold this key over an element to enter copy mode."
         >
           <KeyCapture value={leaderKey} onChange={handleChangeLeaderKey} />
+        </Setting>
+
+        <Setting
+          label="Highlight color"
+          description="The outline drawn around the element you are about to copy."
+        >
+          <div className={styles.controls}>
+            <span
+              className={styles.highlightPreview}
+              style={{ outlineColor: highlightColor }}
+            >
+              Preview
+            </span>
+            <ColorPicker
+              value={highlightColor}
+              label="Highlight color"
+              onChange={handleChangeHighlightColor}
+            />
+          </div>
+        </Setting>
+
+        <Setting
+          label="Copy confirmations"
+          description="Show a brief message after a copy succeeds or fails. Preview works even while this is off."
+        >
+          <div className={styles.controls}>
+            <button className={styles.preview} onClick={handleClickPreview}>
+              Preview
+            </button>
+            <Switch
+              checked={toastsEnabled}
+              label="Copy confirmations"
+              onChange={handleChangeToasts}
+            />
+          </div>
         </Setting>
       </SettingGroup>
 

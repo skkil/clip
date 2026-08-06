@@ -42,8 +42,8 @@ export default class MenuState extends State {
     {
       key: 'I',
       label: '[I]mage',
-      onClick: async () => {
-        await copyElementAsImageToClipboard(this.#selected!);
+      onClick: () => {
+        void copyElementAsImageToClipboard(this.#selected!);
       },
     },
     {

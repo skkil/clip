@@ -1,7 +1,7 @@
 .clip-hovered-element {
-  outline: 1px solid red;
+  outline: 1px solid var(--clip-highlight-color, #ff0000);
 }
 
 .clip-selected-element {
-  outline: 1px solid red;
+  outline: 1px solid var(--clip-highlight-color, #ff0000);
 }
