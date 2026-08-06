@@ -14,3 +14,18 @@ export function getKey(key: string): Key | undefined {
       return Key.ENTER;
   }
 }
+
+export function getKeyLabel(key: Key): string {
+  switch (key) {
+    case Key.ALT:
+      return 'Alt';
+    case Key.CONTROL:
+      return 'Ctrl';
+    case Key.SHIFT:
+      return 'Shift';
+    case Key.ESCAPE:
+      return 'Esc';
+    case Key.ENTER:
+      return 'Enter';
+  }
+}

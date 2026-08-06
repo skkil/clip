@@ -1,0 +1,40 @@
+.group {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-raised);
+  overflow: hidden;
+}
+
+.setting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px 18px;
+}
+
+.setting + .setting {
+  border-top: 1px solid var(--border);
+}
+
+.text {
+  min-width: 0;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 550;
+}
+
+.description {
+  margin: 2px 0 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.control {
+  flex-shrink: 0;
+}

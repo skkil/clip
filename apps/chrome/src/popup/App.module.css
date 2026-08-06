@@ -1,0 +1,81 @@
+.popup {
+  --surface: #ffffff;
+  --foreground: #0a0a0a;
+  --muted: #6b6b6b;
+  --border: rgba(0, 0, 0, 0.1);
+  --hover: rgba(0, 0, 0, 0.06);
+
+  width: 320px;
+  background: var(--surface);
+  color: var(--foreground);
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  .popup {
+    --surface: #0a0a0a;
+    --foreground: #fafafa;
+    --muted: #a1a1a1;
+    --border: rgba(255, 255, 255, 0.12);
+    --hover: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--foreground);
+  color: var(--surface);
+  flex-shrink: 0;
+}
+
+.wordmark {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  flex: 1;
+}
+
+.settings {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.settings:hover {
+  background: var(--hover);
+  color: var(--foreground);
+}
+
+.tagline {
+  margin: 0;
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+}

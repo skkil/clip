@@ -1,0 +1,15 @@
+.layout {
+  display: flex;
+  min-height: 100%;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 48px 40px;
+}
+
+.content {
+  max-width: 720px;
+  margin: 0 auto;
+}
