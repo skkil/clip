@@ -15,6 +15,7 @@ export default defineConfig({
       input: {
         popup: 'index.html',
         options: 'options.html',
+        welcome: 'welcome.html',
       },
     },
   },

@@ -1,5 +1,13 @@
 import { MessageType } from '@/shared/messages';
 
+chrome.runtime.onInstalled.addListener(({ reason }) => {
+  if (reason !== chrome.runtime.OnInstalledReason.INSTALL) {
+    return;
+  }
+
+  chrome.tabs.create({ url: chrome.runtime.getURL('welcome.html') });
+});
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message?.type !== MessageType.CAPTURE_SELECTION) {
     return;

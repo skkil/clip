@@ -1,13 +1,20 @@
 import { domToBlob } from 'modern-screenshot';
 import TurndownService from 'turndown';
 
+import { emitCopy } from './events';
+
 const turndown = new TurndownService();
 
 export function copyTextToClipboard(text: string): void {
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).catch((err) => {
-      console.error('Failed to copy text:', err);
-    });
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        emitCopy({ format: 'text' });
+      })
+      .catch((err) => {
+        console.error('Failed to copy text:', err);
+      });
   }
 }
 
@@ -32,6 +39,7 @@ export async function copyElementAsImageToClipboard(
   const blob = await domToBlob(element, { type: 'image/png' });
   if (blob) {
     await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+    emitCopy({ format: 'image' });
   }
 }
 

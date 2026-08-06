@@ -1,3 +1,4 @@
+import { emitTransition } from '@/content/util/events';
 import {
   DEFAULT_PREFERENCES,
   type Preferences,
@@ -88,6 +89,8 @@ export class App implements IApp {
 
     this.#context.state = state;
     this.#states[state].onEnter();
+
+    emitTransition({ from: current, to: state });
   }
 
   handleKeyDown(e: KeyboardEvent): void {

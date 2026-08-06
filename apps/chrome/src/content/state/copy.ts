@@ -1,3 +1,4 @@
+import { copyElementAsTextToClipboard } from '@/content/util/clipboard';
 import { setCursor } from '@/content/util/dom/cursor';
 import { getKey } from '@/shared/utils/key';
 
@@ -53,13 +54,6 @@ export default class CopyState extends State {
     e.preventDefault();
     e.stopPropagation();
 
-    const element = e.target as HTMLElement;
-    const textContent = element.innerText || element.textContent || '';
-
-    if (textContent.trim()) {
-      navigator.clipboard.writeText(textContent.trim()).catch((err) => {
-        console.error('Failed to copy text:', err);
-      });
-    }
+    copyElementAsTextToClipboard(e.target as HTMLElement);
   }
 }
