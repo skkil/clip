@@ -16,6 +16,7 @@
     "build": "bash scripts/build.sh"
   },
   "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
     "modern-screenshot": "^4.7.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",

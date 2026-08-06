@@ -1,3 +1,12 @@
+import {
+  CodeSimpleIcon,
+  FloppyDiskIcon,
+  ImageIcon,
+  MarkdownLogoIcon,
+  TextAlignLeftIcon,
+} from '@phosphor-icons/react';
+import type { ReactNode } from 'react';
+
 import Menu from '@/content/components/menu/Menu';
 import css from '@/content/components/menu/Menu.module.css?inline';
 import {
@@ -17,6 +26,7 @@ import { StateType } from './types';
 interface MenuItem {
   key: string;
   label: string;
+  icon: ReactNode;
   onClick: () => void;
 }
 
@@ -27,35 +37,40 @@ export default class MenuState extends State {
   #items: MenuItem[] = [
     {
       key: 'T',
-      label: '[T]ext',
+      label: 'Text (T)',
+      icon: <TextAlignLeftIcon />,
       onClick: () => {
         copyElementAsTextToClipboard(this.#selected!);
       },
     },
     {
       key: 'H',
-      label: '[H]TML',
+      label: 'HTML (H)',
+      icon: <CodeSimpleIcon />,
       onClick: () => {
         copyElementAsHtmlToClipboard(this.#selected!);
       },
     },
     {
       key: 'I',
-      label: '[I]mage',
+      label: 'Image (I)',
+      icon: <ImageIcon />,
       onClick: () => {
         void copyElementAsImageToClipboard(this.#selected!);
       },
     },
     {
       key: 'M',
-      label: '[M]arkdown',
+      label: 'Markdown (M)',
+      icon: <MarkdownLogoIcon />,
       onClick: () => {
         copyElementAsMarkdownToClipboard(this.#selected!);
       },
     },
     {
       key: 'S',
-      label: '[S]ave to file',
+      label: 'Save to file (S)',
+      icon: <FloppyDiskIcon />,
       onClick: () => {
         saveElementAsTextToFile(this.#selected!);
       },
@@ -71,7 +86,11 @@ export default class MenuState extends State {
     this.#mount = mount(
       <Menu
         position={this.app.mousePosition}
-        items={this.#items.map(({ key, label }) => ({ key, label }))}
+        items={this.#items.map(({ key, label, icon }) => ({
+          key,
+          label,
+          icon,
+        }))}
         onItemClick={(key: string) => {
           const item = this.#items.find((i) => i.key === key);
           item?.onClick();
