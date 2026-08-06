@@ -1,11 +1,5 @@
 import { emitTransition } from '@/content/util/events';
-import {
-  DEFAULT_PREFERENCES,
-  type Preferences,
-  getPreferences,
-  registerPreferencesChangeEventListener,
-} from '@/shared/preferences';
-import type { Key } from '@/shared/types/key';
+import { DEFAULT_PREFERENCES, type Preferences } from '@/shared/preferences';
 
 import CopyState from './copy';
 import MenuState from './menu';
@@ -68,19 +62,13 @@ export class App implements IApp {
     return this.#context.preferences;
   }
 
-  set leaderKey(key: Key) {
-    this.#context.preferences.keys.leader = key;
+  applyPreferences(preferences: Preferences): void {
+    this.#context.preferences = preferences;
   }
 
-  loadPreferences(): void {
-    getPreferences().then((preferences) => {
-      this.leaderKey = preferences.keys.leader;
-    });
-
-    registerPreferencesChangeEventListener((preferences) => {
-      this.leaderKey = preferences.keys.leader;
-      this.transition(StateType.NORMAL);
-    });
+  reset(): void {
+    this.transition(StateType.NORMAL);
+    this.hoveredElement = null;
   }
 
   transition(state: StateType): void {
@@ -135,6 +123,5 @@ export class App implements IApp {
 }
 
 const app = new App();
-app.loadPreferences();
 
 export default app;

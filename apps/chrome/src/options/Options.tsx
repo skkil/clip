@@ -4,6 +4,7 @@ import styles from './Options.module.css';
 import { Sidebar } from './components/sidebar/Sidebar';
 import type { SectionId } from './sections';
 import { General } from './sections/general/General';
+import { Sites } from './sections/sites/Sites';
 
 export default function Options() {
   const [activeSection, setActiveSection] = useState<SectionId>('general');
@@ -18,6 +19,7 @@ export default function Options() {
       <main className={styles.main}>
         <div className={styles.content}>
           {activeSection === 'general' && <General />}
+          {activeSection === 'sites' && <Sites />}
         </div>
       </main>
     </div>

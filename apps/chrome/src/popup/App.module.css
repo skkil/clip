@@ -8,6 +8,9 @@
   --control: #f6f6f6;
   --control-hover: #ededed;
   --subtle: #9a9a9a;
+  --surface-raised: #ffffff;
+  --accent: #0a0a0a;
+  --accent-foreground: #ffffff;
 
   width: 320px;
   background: var(--surface);
@@ -30,6 +33,9 @@
     --control: #202020;
     --control-hover: #292929;
     --subtle: #737373;
+    --surface-raised: #161616;
+    --accent: #fafafa;
+    --accent-foreground: #0a0a0a;
   }
 }
 
@@ -78,6 +84,48 @@
 .settings:hover {
   background: var(--hover);
   color: var(--foreground);
+}
+
+.toggles {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 14px;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+}
+
+.toggle + .toggle {
+  border-top: 1px solid var(--border);
+}
+
+.toggleDimmed .toggleLabel {
+  color: var(--subtle);
+}
+
+.toggleLabel {
+  font-size: 13px;
+  font-weight: 500;
+  min-width: 0;
+}
+
+.host {
+  font-weight: 400;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.paused {
+  margin: 0;
+  padding: 4px 14px 14px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
 }
 
 .hint {

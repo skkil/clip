@@ -84,3 +84,15 @@ export function showToast(status: ToastStatus, text: string): void {
 export function previewToast(status: ToastStatus, text: string): void {
   show(status, text);
 }
+
+export function dismissToast(): void {
+  if (timer !== null) {
+    window.clearTimeout(timer);
+    timer = null;
+  }
+
+  mounted?.unmount();
+  mounted = null;
+  current = null;
+  visible = false;
+}
