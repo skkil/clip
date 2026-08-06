@@ -4,6 +4,7 @@ import Screenshot, {
   type ScreenshotHandle,
 } from '@/content/components/screenshot/Screenshot';
 import css from '@/content/components/screenshot/Screenshot.module.css?inline';
+import { setCursor } from '@/content/util/dom/cursor';
 import { type Mount, mount } from '@/content/util/dom/mount';
 import { MessageType } from '@/shared/messages';
 
@@ -21,14 +22,12 @@ export default class ScreenshotState extends State {
     null;
 
   onEnter(): void {
-    document.body.style.cursor = 'crosshair';
+    setCursor('crosshair');
 
     this.#mount = mount(<Screenshot ref={this.#ref} />, css);
   }
 
   onExit(): void {
-    document.body.style.cursor = 'default';
-
     this.#mount?.unmount();
     this.#mount = null;
     this.#isSelecting = false;

@@ -1,3 +1,4 @@
+import { setCursor } from '@/content/util/dom/cursor';
 import { getKey } from '@/shared/utils/key';
 
 import { State } from './state';
@@ -5,7 +6,7 @@ import { StateType } from './types';
 
 export default class CopyState extends State {
   onEnter(): void {
-    document.body.style.cursor = 'copy';
+    setCursor('copy');
 
     const hoveredElement = this.app.hoveredElement;
     if (hoveredElement) {

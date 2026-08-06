@@ -1,3 +1,4 @@
+import { restoreCursor } from '@/content/util/dom/cursor';
 import { getKey } from '@/shared/utils/key';
 
 import { State } from './state';
@@ -5,7 +6,7 @@ import { StateType } from './types';
 
 export default class NormalState extends State {
   onEnter(): void {
-    document.body.style.cursor = 'default';
+    restoreCursor();
   }
 
   onExit(): void {}
