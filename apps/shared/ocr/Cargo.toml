@@ -1,0 +1,28 @@
+[package]
+name = "clip-ocr"
+description = "CLIP's OCR engine: PP-OCRv5 on tract, shared by the desktop app and the Chrome extension"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.95"
+license = "MIT"
+
+[lib]
+crate-type = ["rlib", "cdylib"]
+
+[features]
+wasm = ["dep:wasm-bindgen", "dep:js-sys"]
+
+[dependencies]
+thiserror = "2"
+tract-onnx = "0.23.9"
+wasm-bindgen = { version = "0.2", optional = true }
+js-sys = { version = "0.3", optional = true }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+tract-linalg = { version = "0.23.9", features = ["multithread-mm"] }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+getrandom = { version = "0.4", features = ["wasm_js"] }
+
+[dev-dependencies]
+image = { version = "0.25", default-features = false, features = ["png"] }

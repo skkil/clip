@@ -90,6 +90,8 @@ Multi-app monorepo without a workspace manager:
 
 - `apps/chrome/` - Chrome extension (React + TypeScript + Vite)
 - `apps/cli/` - Go CLI tool
+- `apps/desktop/` - Rust desktop app: screen capture, OCR text copy, shortcut daemon
+- `apps/shared/ocr/` - Rust OCR engine (PP-OCRv5 on tract), native and WebAssembly
 - `apps/server/` - Go server (empty stub)
 - `apps/web/` - Web application
 - `apps/mobile/` - Mobile application
@@ -171,6 +173,24 @@ Currently a stub with empty `main()`.
 
 Both Go apps output to `bin/clip` in their respective directories. This is
 intentional - they are separate binaries.
+
+## Rust apps (`apps/desktop/`, `apps/shared/ocr/`)
+
+```bash
+cd apps/desktop
+cargo build --release   # bin: target/release/clip-desktop
+cargo test
+cargo clippy --all-targets
+```
+
+- One crate, no workspace. Platform code lives under `src/platform/<os>/`
+  behind the `Platform` trait, with OS-only dependencies gated by
+  `[target.'cfg(target_os = ...)'.dependencies]`. Only Wayland exists today.
+- `clip-desktop` depends on `apps/shared/ocr` by path. The OCR crate also
+  builds to `wasm32-unknown-unknown` with `--features wasm` for the Chrome
+  extension (see its README).
+- OCR models (~109 MB) are not committed; fetch them with
+  `apps/shared/ocr/scripts/fetch-models.py`.
 
 ## No root-level tooling
 

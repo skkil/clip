@@ -1,0 +1,8 @@
+clip-ocr bundles text detection and recognition models from PaddleOCR
+(PP-OCRv5 mobile series), converted to ONNX and published by PaddlePaddle at
+https://huggingface.co/PaddlePaddle.
+
+Copyright (c) PaddlePaddle Authors. Licensed under the Apache License,
+Version 2.0; see LICENSE-MODELS. The models are redistributed unmodified.
+The character dictionaries in rec/*.txt are extracted from each model's
+inference.yml without modification.
